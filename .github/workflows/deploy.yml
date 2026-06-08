@@ -29,6 +29,10 @@ jobs:
 
       - run: npm ci
       - run: npm run build
+        env:
+          # Set to 'true' once tangamy.com custom domain DNS is live,
+          # so that basePath/assetPrefix are removed from the build.
+          CUSTOM_DOMAIN: 'false'
 
       - uses: actions/configure-pages@v5
 
