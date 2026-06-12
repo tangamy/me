@@ -32,7 +32,7 @@ jobs:
         env:
           # Set to 'true' once tangamy.com custom domain DNS is live,
           # so that basePath/assetPrefix are removed from the build.
-          CUSTOM_DOMAIN: 'false'
+          CUSTOM_DOMAIN: 'true'
 
       - uses: actions/configure-pages@v5
 
