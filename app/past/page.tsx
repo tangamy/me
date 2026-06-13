@@ -1,17 +1,10 @@
-import { projects } from '@/components/data';
-import ProjectCard from '@/components/ProjectCard';
+import ConstructionBarrier from '@/components/ConstructionBarrier';
 
 export default function Past() {
   return (
-    <main className="min-h-screen flex flex-col justify-center px-8 md:px-16">
-      <div className="max-w-2xl py-32">
-        <p className="text-[10px] tracking-[0.3em] uppercase text-site-subtle mb-14">Past</p>
-        <div className="space-y-5">
-          {projects.map((p) => (
-            <ProjectCard key={p.title} {...p} />
-          ))}
-        </div>
-      </div>
+    <main className="min-h-screen flex flex-col items-center justify-center gap-8 px-8">
+      <ConstructionBarrier className="w-72 md:w-96" />
+      <p className="font-display font-light text-5xl tracking-widest text-site-muted">WIP</p>
     </main>
   );
 }
