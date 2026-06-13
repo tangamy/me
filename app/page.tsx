@@ -1,53 +1,45 @@
-import { bio, projects, links } from '@/components/data';
-import ProjectCard from '@/components/ProjectCard';
+import { bio, links } from '@/components/data';
 
-export default function Home() {
+export default function Me() {
   return (
-    <>
-      <nav className="sticky top-0 z-10 bg-site-bg/80 backdrop-blur border-b border-site-border">
-        <div className="max-w-3xl mx-auto px-6 py-4 flex justify-between items-center">
-          <span className="font-semibold text-site-text">{bio.name}</span>
-          <div className="flex gap-6 text-sm text-site-muted">
-            <a href="#portfolio" className="hover:text-site-text transition-colors">Work</a>
-            <a href="#links" className="hover:text-site-text transition-colors">Contact</a>
-          </div>
-        </div>
-      </nav>
+    <main className="min-h-screen relative flex flex-col items-center justify-center overflow-hidden">
 
-      <main className="max-w-3xl mx-auto px-6">
-        <section id="hero" className="py-24">
-          <h1 className="text-4xl font-bold mb-4 text-site-text">{bio.name}</h1>
-          <p className="text-xl text-site-muted leading-relaxed max-w-xl">{bio.blurb}</p>
-        </section>
+      {/* Center: TANG / AMY / subtitle / location */}
+      <div className="text-center px-4">
+        <h1
+          className="font-display font-bold leading-[0.88] tracking-tight text-site-text"
+          style={{ fontSize: 'clamp(5rem, 20vw, 22rem)' }}
+        >
+          TANG
+        </h1>
+        <h1
+          className="font-display font-light leading-[0.88] tracking-tight text-site-muted"
+          style={{ fontSize: 'clamp(5rem, 20vw, 22rem)' }}
+        >
+          AMY
+        </h1>
+        <p className="mt-8 text-sm tracking-[0.25em] text-site-muted">
+          {bio.blurb}
+        </p>
+        <p className="mt-3 text-xs tracking-wide text-site-subtle">
+          📍 San Francisco Bay Area, California
+        </p>
+      </div>
 
-        <section id="portfolio" className="py-16 border-t border-site-border">
-          <h2 className="text-xs font-semibold uppercase tracking-widest text-site-subtle mb-8">Work</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {projects.map((p) => (
-              <ProjectCard key={p.title} {...p} />
-            ))}
-          </div>
-        </section>
+      {/* Bottom-right: contact links */}
+      <div className="absolute bottom-14 right-8 md:right-16 text-right space-y-2">
+        <p className="text-[10px] tracking-[0.3em] uppercase text-site-subtle mb-4">Connect</p>
+        {links.map((l) => (
+          <a
+            key={l.label}
+            href={l.url}
+            className="block text-xs tracking-[0.15em] uppercase text-site-muted hover:text-site-text transition-colors"
+          >
+            {l.label}
+          </a>
+        ))}
+      </div>
 
-        <section id="links" className="py-16 border-t border-site-border">
-          <h2 className="text-xs font-semibold uppercase tracking-widest text-site-subtle mb-8">Contact</h2>
-          <div className="flex flex-wrap gap-3">
-            {links.map((l) => (
-              <a
-                key={l.label}
-                href={l.url}
-                className="px-4 py-2 rounded-full border border-site-border text-sm text-site-muted hover:border-site-text hover:text-site-text transition-colors"
-              >
-                {l.label}
-              </a>
-            ))}
-          </div>
-        </section>
-      </main>
-
-      <footer className="max-w-3xl mx-auto px-6 py-10 border-t border-site-border">
-        <p className="text-sm text-site-subtle">&copy; {new Date().getFullYear()} {bio.name}</p>
-      </footer>
-    </>
+    </main>
   );
 }

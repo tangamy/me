@@ -8,6 +8,7 @@ const isCustomDomain = process.env.CUSTOM_DOMAIN === 'true';
 
 const nextConfig = {
   output: 'export',
+  trailingSlash: true,
   images: { unoptimized: true },
   basePath: isCustomDomain ? '' : '/me',
   assetPrefix: isCustomDomain ? '' : '/me',
