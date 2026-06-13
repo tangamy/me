@@ -14,16 +14,16 @@ export default function ConstructionBarrier({ className }: { className?: string 
           patternUnits="userSpaceOnUse"
           patternTransform="rotate(-45)"
         >
-          <rect width="11" height="22" fill="#F59E0B" />
-          <rect x="11" width="11" height="22" fill="#FFFBEB" />
+          <rect width="11" height="22" fill="#0F3D6E" />
+          <rect x="11" width="11" height="22" fill="#D3D8DA" />
         </pattern>
         <clipPath id="plank1"><rect x="10" y="68" width="300" height="36" rx="5" /></clipPath>
         <clipPath id="plank2"><rect x="10" y="118" width="300" height="36" rx="5" /></clipPath>
       </defs>
 
       {/* Warning light */}
-      <ellipse cx="160" cy="46" rx="14" ry="14" fill="#F59E0B" />
-      <ellipse cx="160" cy="46" rx="7" ry="7" fill="#FCD34D" />
+      <ellipse cx="160" cy="46" rx="14" ry="14" fill="#0F3D6E" />
+      <ellipse cx="160" cy="46" rx="7" ry="7" fill="#5A6E7A" />
       <line x1="160" y1="60" x2="160" y2="68" stroke="#5A6E7A" strokeWidth="3" />
 
       {/* Top plank */}
