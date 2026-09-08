@@ -3,6 +3,10 @@ module.exports = {
   content: ['./app/**/*.{ts,tsx}', './components/**/*.{ts,tsx}'],
   theme: {
     extend: {
+      fontFamily: {
+        sans:    ['var(--font-sans)', 'sans-serif'],
+        display: ['var(--font-display)', 'serif'],
+      },
       colors: {
         site: {
           bg:     '#D3D8DA', // rgb(211, 216, 218)
