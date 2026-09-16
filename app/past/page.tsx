@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useState, useRef, useCallback, useEffect } from 'react';
 
 type Category = 'photo' | 'running' | 'career';
@@ -20,12 +21,13 @@ function toDecimalYear(label: string): number {
   return parseInt(year) + MONTH_INDEX[mon] / 12;
 }
 
-const TIMELINE: { id: string; label: string; name: string; category: Category }[] = [
-  { id: '2026-aug', label: '2026-Aug', name: 'Cabo, MX',      category: 'photo' },
+const TIMELINE: { id: string; label: string; name: string; category: Category; image?: string }[] = [
+  { id: '2026-aug', label: '2026-Aug', name: 'Cabo, MX',      category: 'photo', image: '/photos/cabo.jpg' },
   { id: '2026-may', label: '2026-May', name: 'Beijing, CN',   category: 'photo' },
-  { id: '2024-may', label: '2024-May', name: 'Switzerland',   category: 'photo' },
+  { id: '2025-apr', label: '2025-Apr', name: 'Himeji, JP',    category: 'photo', image: '/photos/himeji.jpg' },
+  { id: '2024-may', label: '2024-May', name: 'Oberland, CH',  category: 'photo', image: '/photos/oberland.jpg' },
   { id: '2023-jul', label: '2023-Jul', name: 'Marathon',      category: 'running' },
-  { id: '2020-sep', label: '2020-Sep', name: 'Unity',         category: 'career' },
+  { id: '2020-sep', label: '2020-Sep', name: 'Unity Technologies', category: 'career' },
   { id: '2019-feb', label: '2019-Feb', name: 'Half Marathon', category: 'running' },
   { id: '2016-oct', label: '2016-Oct', name: 'EA',            category: 'career' },
   { id: '2015-may', label: '2015-May', name: 'Caesars',       category: 'career' },
@@ -186,6 +188,17 @@ export default function Past() {
         <h2 className="font-display font-bold text-3xl md:text-4xl leading-tight" style={{ color: activeColor }}>
           {active.name}
         </h2>
+        {active.image && (
+          <div className="relative mt-6 w-full aspect-[3/2] rounded-lg overflow-hidden border border-site-border">
+            <Image
+              src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${active.image}`}
+              alt={active.name}
+              fill
+              className="object-cover"
+              sizes="(min-width: 768px) 48rem, 100vw"
+            />
+          </div>
+        )}
       </section>
     </main>
   );
