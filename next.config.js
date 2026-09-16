@@ -5,13 +5,17 @@
 // basePath must match the repo name so assets resolve correctly.
 // Remove basePath (and assetPrefix) once your custom domain is live.
 const isCustomDomain = process.env.CUSTOM_DOMAIN === 'true';
+const basePath = isCustomDomain ? '' : '/me';
 
 const nextConfig = {
   output: 'export',
   trailingSlash: true,
   images: { unoptimized: true },
-  basePath: isCustomDomain ? '' : '/me',
-  assetPrefix: isCustomDomain ? '' : '/me',
+  basePath,
+  assetPrefix: basePath,
+  // next/image doesn't prepend basePath to raw <img src> when unoptimized,
+  // so expose it for components to prefix public/ asset paths manually.
+  env: { NEXT_PUBLIC_BASE_PATH: basePath },
 };
 
 module.exports = nextConfig;
