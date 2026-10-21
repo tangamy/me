@@ -206,18 +206,27 @@ export async function createScene({ canvas, width, height, variant = "intro", co
 
   // ---- name layout (shared by particle sampling and crisp overlay) ----
   const name = String(cfg.name || " ").trim() || " ";
+  // In portrait mode split first/last name onto two rows for impact.
+  const nameLines = (cfg.splitName && name.includes(" ")) ? name.split(" ") : [name];
+  const multiLine = nameLines.length > 1;
   // The name is set in small caps; the flag is only on while measuring and drawing it.
   ctx.font = `600 100px ${SANS}`;
   ctx.fontVariantCaps = "small-caps";
   ctx.letterSpacing = "-3px";
-  const w100 = Math.max(1, ctx.measureText(name).width);
-  const fs = Math.min(((portrait ? 0.76 : 0.7) * W) / w100 * 100, (portrait ? 190 : 230) * s);
+  const w100 = multiLine
+    ? Math.max(1, Math.max(...nameLines.map(l => ctx.measureText(l).width)))
+    : Math.max(1, ctx.measureText(name).width);
+  const fs = Math.min(((portrait && multiLine ? 0.85 : portrait ? 0.76 : 0.7) * W) / w100 * 100, (portrait ? 280 : 230) * s);
   const nameFont = `600 ${fs}px ${SANS}`;
   const nameTracking = `${-0.03 * fs}px`;
-  const nameY = cy;
+  const lineH = fs * 1.1;
+  const nameY = multiLine ? cy - lineH * 0.5 : cy;
+  const nameLine2Y = cy + lineH * 0.5;
   ctx.font = nameFont;
   ctx.letterSpacing = nameTracking;
-  const nameW = ctx.measureText(name).width;
+  const nameW = multiLine
+    ? Math.max(...nameLines.map(l => ctx.measureText(l).width))
+    : ctx.measureText(name).width;
   ctx.letterSpacing = "0px";
   ctx.fontVariantCaps = "normal";
   const openFade = (t) => easeInOut(range(t, OPEN_FADE, OPEN_FADE + 0.55));
@@ -405,7 +414,11 @@ export async function createScene({ canvas, width, height, variant = "intro", co
     o.textBaseline = "middle";
     o.fillStyle = "#fff";
     o.fontVariantCaps = "small-caps";
-    o.fillText(name, W / 2, nameY);
+    if (multiLine) {
+      nameLines.forEach((line, i) => o.fillText(line, W / 2, i === 0 ? nameY : nameLine2Y));
+    } else {
+      o.fillText(name, W / 2, nameY);
+    }
     o.fontVariantCaps = "normal";
     const data = o.getImageData(0, 0, W, H).data;
     let count = 0;
@@ -657,7 +670,11 @@ export async function createScene({ canvas, width, height, variant = "intro", co
     ctx.shadowBlur = T.nameGlow ? 40 * s : 0;
     ctx.fillStyle = L((0.97 / T.inkGain) * alpha);
     ctx.fontVariantCaps = "small-caps";
-    ctx.fillText(name, W / 2, nameY);
+    if (multiLine) {
+      nameLines.forEach((line, i) => ctx.fillText(line, W / 2, i === 0 ? nameY : nameLine2Y));
+    } else {
+      ctx.fillText(name, W / 2, nameY);
+    }
     ctx.fontVariantCaps = "normal";
     ctx.shadowBlur = 0;
     ctx.letterSpacing = "0px";
@@ -690,7 +707,7 @@ export async function createScene({ canvas, width, height, variant = "intro", co
     ctx.restore();
     if (p > 0 && p < 1) {
       ctx.fillStyle = A(1);
-      ctx.fillRect(edge, nameY - fs * 0.5, 3 * s, fs);
+      ctx.fillRect(edge, nameY - fs * 0.5, 3 * s, multiLine ? nameLine2Y - nameY + fs : fs);
     }
 
     const roleY = nameY - fs * 0.78;
@@ -699,10 +716,10 @@ export async function createScene({ canvas, width, height, variant = "intro", co
       mono(portrait ? 20 : 19);
       ctx.letterSpacing = `${5 * s}px`;
       ctx.fillStyle = A(0.95);
-      ctx.fillText(`[ ${scramble(String(cfg.role).toUpperCase(), rp, t, 3)} ]`, W / 2, roleY);
+      ctx.fillText(scramble(String(cfg.role).toUpperCase(), rp, t, 3), W / 2, roleY);
     }
 
-    const tagY = nameY + fs * 0.72;
+    const tagY = (multiLine ? nameLine2Y : nameY) + fs * 0.72;
     const tp = range(t, 0.7, 2.0);
     if (tp > 0) {
       ctx.letterSpacing = "0px";
@@ -710,7 +727,7 @@ export async function createScene({ canvas, width, height, variant = "intro", co
       const maxTagW = W - inset * 2 - (portrait ? 130 : 100) * s;
       ctx.font = `400 100px ${SANS}`;
       const tagW = Math.max(1, ctx.measureText(String(cfg.tagline)).width);
-      const tagFs = Math.min((portrait ? 34 : 32) * s, (maxTagW / tagW) * 100);
+      const tagFs = Math.min((portrait ? 24 : 22) * s, (maxTagW / tagW) * 100);
       ctx.font = `400 ${tagFs}px ${SANS}`;
       ctx.fillStyle = L(0.62);
       ctx.fillText(scramble(String(cfg.tagline), tp, t, 17), W / 2, tagY);

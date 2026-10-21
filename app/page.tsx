@@ -7,12 +7,12 @@ export default function Me() {
       <HeroCanvas />
 
       {/* Bottom corners: gear (left) and connect (right) — shared row so labels align */}
-      <div className="absolute bottom-14 left-8 right-8 md:left-16 md:right-16 flex justify-between items-start">
+      <div className="absolute bottom-8 sm:bottom-14 left-8 right-8 md:left-16 md:right-16 flex flex-col gap-6 sm:flex-row sm:justify-between sm:items-start">
         {/* Gear */}
-        <div className="space-y-2">
-          <p className="text-[10px] tracking-[0.3em] uppercase text-site-subtle mb-4">Gear</p>
+        <div className="space-y-3 sm:space-y-2">
+          <p className="text-[10px] tracking-[0.3em] uppercase text-site-subtle mb-3 sm:mb-4">Gear</p>
           {gear.map((item) => (
-            <div key={item.label} className="flex items-center gap-2 text-xs tracking-[0.15em] uppercase text-site-muted">
+            <div key={item.label} className="flex items-center gap-2 text-xs font-medium tracking-[0.1em] sm:tracking-[0.15em] uppercase text-site-muted">
               {item.type === 'camera' ? (
                 <svg viewBox="0 0 24 24" className="w-3 h-3 shrink-0" fill="currentColor" aria-hidden="true">
                   <path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
@@ -28,13 +28,13 @@ export default function Me() {
         </div>
 
         {/* Connect */}
-        <div className="space-y-2">
-          <p className="text-[10px] tracking-[0.3em] uppercase text-site-subtle mb-4 text-right">Connect</p>
+        <div className="space-y-3 sm:space-y-2 w-full sm:w-auto">
+          <p className="text-[10px] tracking-[0.3em] uppercase text-site-subtle mb-3 sm:mb-4 text-right">Connect</p>
           {links.map((l) => (
             <a
               key={l.label}
               href={l.url}
-              className="flex items-center justify-end gap-2 text-xs tracking-[0.15em] uppercase text-site-muted hover:text-site-text transition-colors"
+              className="flex items-center justify-end gap-2 text-xs font-medium tracking-[0.1em] sm:tracking-[0.15em] uppercase text-site-muted hover:text-site-text transition-colors"
             >
               {l.label}
               {l.type === 'linkedin' && (
@@ -44,8 +44,9 @@ export default function Me() {
               )}
             </a>
           ))}
-          <p className="mt-4 flex items-center justify-end gap-1 text-xs tracking-[0.15em] uppercase text-site-muted">
-            San Francisco Bay Area, CA
+          <p className="mt-3 sm:mt-4 flex items-center justify-end gap-1 text-xs font-medium tracking-[0.1em] sm:tracking-[0.15em] uppercase text-site-muted">
+            <span className="sm:hidden">Bay Area, CA</span>
+            <span className="hidden sm:inline">San Francisco Bay Area, CA</span>
             <svg viewBox="0 0 24 24" className="w-3 h-3 shrink-0" fill="currentColor" aria-hidden="true">
               <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
             </svg>
