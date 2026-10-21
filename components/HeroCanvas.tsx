@@ -30,13 +30,15 @@ export default function HeroCanvas() {
         width: number;
         height: number;
         variant: string;
+        config?: Record<string, unknown>;
         fps?: number;
       }) => Promise<{ draw: (t: number) => void; duration: number; fps: number }>;
 
       if (!alive) return;
 
       // --- Intro ---
-      const intro = await createScene({ canvas, width: sceneW, height: sceneH, variant: 'intro' });
+      const isMobile = window.innerWidth < 768;
+      const intro = await createScene({ canvas, width: sceneW, height: sceneH, variant: 'intro', config: { splitName: isMobile } });
       if (!alive) return;
       let t0: number | null = null;
 
