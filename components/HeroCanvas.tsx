@@ -22,8 +22,9 @@ export default function HeroCanvas() {
     const sceneH = portrait ? Math.round(H * dpr) : Math.round(H * dpr);
 
     (async () => {
-      // webpackIgnore keeps the bundler from trying to resolve a public-dir URL
-      const mod = await import(/* webpackIgnore: true */ '/clip/heroScene.js');
+      // Variable path: TS types this as `any` (no module resolution), webpack can't bundle it
+      const url = '/clip/heroScene.js';
+      const mod = await import(/* webpackIgnore: true */ url);
       const createScene = mod.createScene as (opts: {
         canvas: HTMLCanvasElement;
         width: number;
